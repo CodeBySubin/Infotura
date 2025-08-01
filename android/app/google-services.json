@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "825600145162",
+    "project_id": "infotura-5cb2e",
+    "storage_bucket": "infotura-5cb2e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825600145162:android:3107dae00149974fad6cf3",
+        "android_client_info": {
+          "package_name": "com.example.infotura"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYkFRmwwORD0FWVd-d5aGNBUP_Sl2QHoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
