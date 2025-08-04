@@ -4,7 +4,7 @@ import 'package:infotura/features/attendance/data/model/attendance_model.dart';
 import 'package:infotura/features/attendance/data/datasource/attendance_local_datasourece.dart';
 import 'package:infotura/features/attendance/data/datasource/attendance_remote_datasource.dart';
 import 'package:infotura/features/attendance/domain/repository/attendance_repository.dart';
-import 'package:infotura/features/attendance/domain/attendancy_enity.dart';
+import 'package:infotura/features/attendance/domain/entity/attendancy_enity.dart';
 
 
 class AttendanceRepositoryImpl implements AttendanceRepository {

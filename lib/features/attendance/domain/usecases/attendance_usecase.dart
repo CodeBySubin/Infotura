@@ -1,9 +1,9 @@
 
 import 'package:infotura/features/attendance/domain/repository/attendance_repository.dart';
-import 'package:infotura/features/attendance/domain/attendancy_enity.dart';
+import 'package:infotura/features/attendance/domain/entity/attendancy_enity.dart';
 
 import 'package:infotura/features/attendance/domain/repository/attendance_repository.dart';
-import 'package:infotura/features/attendance/domain/attendancy_enity.dart';
+import 'package:infotura/features/attendance/domain/entity/attendancy_enity.dart';
 
 class MarkAttendanceUseCase {
   final AttendanceRepository repository;

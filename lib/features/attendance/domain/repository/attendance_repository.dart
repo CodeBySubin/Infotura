@@ -1,4 +1,4 @@
-import 'package:infotura/features/attendance/domain/attendancy_enity.dart';
+import 'package:infotura/features/attendance/domain/entity/attendancy_enity.dart';
 
 abstract class AttendanceRepository {
   Future<void> saveLocally(AttendanceEntity entity);

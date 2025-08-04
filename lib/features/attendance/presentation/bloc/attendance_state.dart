@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:infotura/features/attendance/domain/attendancy_enity.dart';
+import 'package:infotura/features/attendance/domain/entity/attendancy_enity.dart';
 
 part 'attendance_state.freezed.dart';
 

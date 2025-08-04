@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:infotura/features/attendance/domain/usecases/attendance_usecase.dart';
-import 'package:infotura/features/attendance/domain/attendancy_enity.dart';
+import 'package:infotura/features/attendance/domain/entity/attendancy_enity.dart';
 import 'attendance_event.dart';
 import 'attendance_state.dart';
 
