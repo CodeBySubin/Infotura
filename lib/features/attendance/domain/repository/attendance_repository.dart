@@ -7,5 +7,5 @@ abstract class AttendanceRepository {
   Future<List<AttendanceEntity>> getLocal();
   Future<List<AttendanceEntity>> getRemote();
   Future<void> cacheLocally(List<AttendanceEntity> entities);
+  Future<void> cleanUpLocalStorage();
 }
-

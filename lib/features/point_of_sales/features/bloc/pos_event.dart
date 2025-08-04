@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:infotura/features/point_of_sales/domain/pof_entity.dart';
+import 'package:infotura/features/point_of_sales/domain/entity/pof_entity.dart';
 part 'pos_event.freezed.dart';
 
 @freezed

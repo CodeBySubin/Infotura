@@ -1,36 +1,30 @@
+
+
 import 'package:infotura/features/point_of_sales/data/datasource/firebase_datasource.dart';
 import 'package:infotura/features/point_of_sales/data/datasource/hive_datasource.dart';
 import 'package:infotura/features/point_of_sales/data/model/bill_model.dart';
-import 'package:infotura/features/point_of_sales/domain/pof_entity.dart';
+import 'package:infotura/features/point_of_sales/domain/entity/pof_entity.dart';
+import 'package:infotura/features/point_of_sales/domain/repository/repository%20.dart';
 
-class BillRepository {
+class BillRepositoryImpl implements BillRepository {
   final LocalBillDataSource local;
   final RemoteBillDataSource remote;
 
-  BillRepository(this.local, this.remote);
+  BillRepositoryImpl(this.local, this.remote);
 
-  // ✅ Always save locally
+  @override
   Future<void> saveBillLocally(BillEntity entity) async {
-    final model = BillModel.fromEntity(entity);
-    await local.saveBill(model);
+    await local.saveBill(BillModel.fromEntity(entity));
   }
 
-  // ✅ Try syncing to server (called only if online)
+  @override
   Future<void> syncBillToServer(BillEntity entity) async {
     final model = BillModel.fromEntity(entity);
     await remote.syncBill(model);
     await local.markAsSynced(model.id);
   }
 
-  // ✅ Combined method, used in legacy AddBill logic
-  Future<void> addBill(BillEntity entity, bool isOnline) async {
-    await saveBillLocally(entity);
-    if (isOnline) {
-      await syncBillToServer(entity);
-    }
-  }
-
-  // ✅ Sync any unsynced bills
+  @override
   Future<void> syncUnsyncedBills() async {
     final unsynced = local.getUnsyncedBills();
     for (final bill in unsynced) {
@@ -39,18 +33,21 @@ class BillRepository {
     }
   }
 
-  // ✅ Local data only (used when offline)
+  @override
+  List<BillModel> getUnsyncedLocalBills() => local.getUnsyncedBills();
+
+  @override
   Future<List<BillEntity>> getLocalBills() async {
     return local.getAll().map((e) => e.toEntity()).toList();
   }
 
-  // ✅ Remote data (used when online)
+  @override
   Future<List<BillEntity>> getRemoteBills() async {
-    final data = await remote.fetchAll();
-    return data.map((e) => e.toEntity()).toList();
+    final remoteModels = await remote.fetchAll();
+    return remoteModels.map((e) => e.toEntity()).toList();
   }
 
-  // ✅ Optional: cache remote bills to local (if needed)
+  @override
   Future<void> cacheBillsLocally(List<BillEntity> bills) async {
     for (var bill in bills) {
       final model = BillModel.fromEntity(bill);
@@ -58,4 +55,15 @@ class BillRepository {
       await local.markAsSynced(model.id);
     }
   }
+  
+@override
+Future<void> cleanUpLocalStorage(List<String> remoteIds) async {
+  final allLocal = local.getAll();
+  for (final bill in allLocal) {
+    if (!remoteIds.contains(bill.id)) {
+      await bill.delete(); 
+    }
+  }
+}
+
 }

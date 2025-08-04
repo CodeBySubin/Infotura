@@ -22,14 +22,12 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
     }
   }
 
-  // ✅ Always called
   @override
   Future<void> saveLocally(AttendanceEntity entity) async {
     final model = AttendanceModel.fromEntity(entity);
     await local.save(model);
   }
 
-  // ✅ Called only when internet is available
   @override
   Future<void> syncToServer(AttendanceEntity entity) async {
     final model = AttendanceModel.fromEntity(entity);
@@ -37,7 +35,6 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
     await local.markAsSynced(model);
   }
 
-  // ✅ Used to sync all unsynced entries
   @override
   Future<void> syncUnsynced() async {
     final unsynced = await local.getUnsynced();
@@ -47,21 +44,18 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
     }
   }
 
-  // ✅ Load remote data
   @override
   Future<List<AttendanceEntity>> getRemote() async {
     final remoteData = await remote.fetchAll();
     return remoteData.map((e) => e.toEntity()).toList();
   }
 
-  // ✅ Load local data
   @override
   Future<List<AttendanceEntity>> getLocal() async {
     final localData = await local.getAll();
     return localData.map((e) => e.toEntity()).toList();
   }
 
-  // ✅ Optional: Cache remote data locally
   @override
   Future<void> cacheLocally(List<AttendanceEntity> entities) async {
     for (var entity in entities) {
@@ -69,5 +63,11 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
       await local.save(model);
       await local.markAsSynced(model);
     }
+  }
+
+  @override
+  Future<void> cleanUpLocalStorage() async {
+    final firebaseKeys = await remote.fetchAllKeys();
+    await local.deleteAllExcept(firebaseKeys);
   }
 }

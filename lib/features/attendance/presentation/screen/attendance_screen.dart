@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:infotura/core/widgets/toast.dart';
 import 'package:infotura/features/attendance/presentation/bloc/attendance_bloc.dart';
 import 'package:infotura/features/attendance/presentation/bloc/attendance_event.dart';
 import 'package:infotura/features/attendance/presentation/bloc/attendance_state.dart';
 import 'package:infotura/features/attendance/presentation/screen/attendance_list_screen.dart';
+import 'package:infotura/features/status/status_widget.dart';
 
 class AttendanceScreen extends StatelessWidget {
   const AttendanceScreen({super.key});
@@ -23,6 +25,7 @@ class AttendanceScreen extends StatelessWidget {
           'Attendance',
           style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
         ),
+        actions: [InternetStatusScreen()],
         backgroundColor: Colors.white,
         foregroundColor: Colors.black87,
         elevation: 0,
@@ -32,27 +35,7 @@ class AttendanceScreen extends StatelessWidget {
       body: BlocConsumer<AttendanceBloc, AttendanceState>(
         listener: (context, state) {
           if (state is Success) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: const Row(
-                  children: [
-                    Icon(
-                      Icons.check_circle_outline,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    SizedBox(width: 8),
-                    Text('Attendance marked successfully!'),
-                  ],
-                ),
-                backgroundColor: Colors.green,
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                margin: const EdgeInsets.all(16),
-              ),
-            );
+            showToast('Attendance marked successfully!');
           } else if (state is Failure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(

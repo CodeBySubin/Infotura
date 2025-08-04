@@ -14,7 +14,8 @@ import 'package:infotura/features/attendance/presentation/bloc/attendance_bloc.d
 import 'package:infotura/features/point_of_sales/data/datasource/firebase_datasource.dart';
 import 'package:infotura/features/point_of_sales/data/datasource/hive_datasource.dart';
 import 'package:infotura/features/point_of_sales/data/model/bill_model.dart';
-import 'package:infotura/features/point_of_sales/domain/repository%20.dart';
+import 'package:infotura/features/point_of_sales/data/repository/bill_repository.dart';
+import 'package:infotura/features/point_of_sales/domain/repository/repository%20.dart';
 import 'package:infotura/features/point_of_sales/features/bloc/pos_bloc.dart';
 import 'package:infotura/features/splash/cubit/splash_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -37,25 +38,25 @@ Future<void> setupLocator() async {
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
 
   // POS
-  sl.registerLazySingleton(() => LocalBillDataSource(billBox));
+  // ✅ Core
+  sl.registerLazySingleton(() => billBox);
+  sl.registerLazySingleton(() => LocalBillDataSource(sl()));
   sl.registerLazySingleton(() => RemoteBillDataSource(sl()));
-  sl.registerLazySingleton(() => BillRepository(sl(), sl()));
+  sl.registerLazySingleton<BillRepository>(
+    () => BillRepositoryImpl(sl(), sl()),
+  );
   sl.registerFactory(() => PosBloc(sl(), sl()));
 
   // Attendance
   sl.registerLazySingleton(() => LocalAttendanceDataSource(attendanceBox));
   sl.registerLazySingleton(() => AttendanceRemoteDataSource(sl()));
-
   sl.registerLazySingleton<AttendanceRepository>(
     () => AttendanceRepositoryImpl(sl(), sl()),
   );
-
   sl.registerLazySingleton(() => MarkAttendanceUseCase(sl()));
-
   sl.registerFactory(() => AttendanceBloc(sl(), sl()));
 
+  sl.registerFactory(() => SplashCubit());
 
-
-    sl.registerFactory(() => SplashCubit());
-
+  
 }

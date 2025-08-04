@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:infotura/features/status/status_widget.dart';
 import '../bloc/attendance_bloc.dart';
 import '../bloc/attendance_event.dart';
 import '../bloc/attendance_state.dart';
@@ -49,13 +50,8 @@ class _AttendanceListScreenState extends State<AttendanceListScreen> {
         shadowColor: Colors.black12,
         surfaceTintColor: Colors.transparent,
         actions: [
-          IconButton(
-            onPressed: () {
-              context.read<AttendanceBloc>().add(const LoadAttendanceList());
-            },
-            icon: const Icon(Icons.refresh_rounded),
-            tooltip: 'Refresh',
-          ),
+          InternetStatusScreen(),
+         
         ],
       ),
       body: Column(

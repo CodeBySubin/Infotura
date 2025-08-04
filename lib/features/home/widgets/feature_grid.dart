@@ -88,7 +88,7 @@ class FeatureGrid extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.28,
+        height: MediaQuery.of(context).size.height * 0.25,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: Colors.white,

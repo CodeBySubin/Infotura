@@ -10,6 +10,7 @@ import 'package:infotura/features/attendance/presentation/bloc/attendance_bloc.d
 import 'package:infotura/features/attendance/presentation/screen/attendance_screen.dart';
 import 'package:infotura/features/point_of_sales/features/bloc/pos_bloc.dart';
 import 'package:infotura/features/splash/cubit/splash_bloc.dart';
+import 'package:infotura/features/status/cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,23 +32,22 @@ class MyApp extends StatelessWidget {
         BlocProvider<SplashCubit>(
           create: (_) => sl<SplashCubit>()..initialize(),
         ),
+        BlocProvider(create: (_) => InternetCubit()),
       ],
       child: MaterialApp.router(
         theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.primary,
-          primary: AppColors.primary,
-        ),
-        appBarTheme: AppBarTheme(
-          backgroundColor: AppColors.primary,
-          foregroundColor: Colors.white,
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: AppColors.primary,
+            primary: AppColors.primary,
+          ),
+          appBarTheme: AppBarTheme(
             backgroundColor: AppColors.primary,
+            foregroundColor: Colors.white,
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
           ),
         ),
-      ),
         debugShowCheckedModeBanner: false,
         title: AppStrings.appName,
         routerConfig: AppRouter.router,

@@ -24,4 +24,9 @@ class AttendanceRemoteDataSource {
       );
     }).toList();
   }
+
+  Future<List<String>> fetchAllKeys() async {
+    final snapshot = await firestore.collection('attendance').get();
+    return snapshot.docs.map((doc) => doc.id).toList();
+  }
 }

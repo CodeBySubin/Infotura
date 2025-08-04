@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:infotura/features/point_of_sales/domain/pof_entity.dart';
+import 'package:infotura/features/point_of_sales/domain/entity/pof_entity.dart';
 
 part 'bill_model.g.dart';
 

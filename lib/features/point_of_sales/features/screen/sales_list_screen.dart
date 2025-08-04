@@ -8,6 +8,7 @@ import 'package:infotura/features/point_of_sales/features/widgets/summery_card.d
 import 'package:infotura/features/point_of_sales/features/bloc/pos_bloc.dart';
 import 'package:infotura/features/point_of_sales/features/bloc/pos_event.dart';
 import 'package:infotura/features/point_of_sales/features/bloc/pos_state.dart';
+import 'package:infotura/features/status/status_widget.dart';
 
 class SalesListScreen extends StatefulWidget {
   const SalesListScreen({super.key});
@@ -45,6 +46,7 @@ class _SalesListScreenState extends State<SalesListScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset : false,
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         leading: IconButton(
@@ -61,13 +63,8 @@ class _SalesListScreenState extends State<SalesListScreen> {
         shadowColor: Colors.black12,
         surfaceTintColor: Colors.transparent,
         actions: [
-          IconButton(
-            onPressed: () {
-              context.read<PosBloc>().add(const LoadSalesList());
-            },
-            icon: const Icon(Icons.refresh_rounded),
-            tooltip: 'Refresh',
-          ),
+          InternetStatusScreen(),
+       
         ],
       ),
       body: Column(

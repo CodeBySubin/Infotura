@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:infotura/features/point_of_sales/domain/pof_entity.dart';
+import 'package:infotura/core/widgets/toast.dart';
+import 'package:infotura/features/point_of_sales/domain/entity/pof_entity.dart';
 import 'package:infotura/features/point_of_sales/features/bloc/pos_bloc.dart';
 import 'package:infotura/features/point_of_sales/features/bloc/pos_event.dart';
 import 'package:infotura/features/point_of_sales/features/screen/sales_list_screen.dart';
+import 'package:infotura/features/status/status_widget.dart';
 
 class PosEntryScreen extends StatefulWidget {
   const PosEntryScreen({super.key});
@@ -82,34 +84,7 @@ class _PosEntryScreenState extends State<PosEntryScreen> {
       context.read<PosBloc>().add(PosEvent.addBill(bill));
       await Future.delayed(const Duration(milliseconds: 500));
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Row(
-              children: [
-                const Icon(
-                  Icons.check_circle_outline,
-                  color: Colors.white,
-                  size: 20,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'Bill saved successfully!',
-                ),
-              ],
-            ),
-            backgroundColor: Colors.green,
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            margin: const EdgeInsets.all(16),
-            action: SnackBarAction(
-              label: 'New Entry',
-              textColor: Colors.white,
-              onPressed: _clearForm,
-            ),
-          ),
-        );
+        showToast('Bill saved successfully!');
         _clearForm();
       }
     } catch (e) {
@@ -162,13 +137,7 @@ class _PosEntryScreenState extends State<PosEntryScreen> {
         elevation: 0,
         shadowColor: Colors.black12,
         surfaceTintColor: Colors.transparent,
-        actions: [
-          IconButton(
-            onPressed: _clearForm,
-            icon: const Icon(Icons.refresh_rounded),
-            tooltip: 'Clear Form',
-          ),
-        ],
+        actions: [InternetStatusScreen()],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -471,7 +440,7 @@ class _PosEntryScreenState extends State<PosEntryScreen> {
                       ],
                     ),
                   ),
-                const SizedBox(height: 32),
+                     SizedBox(  height: MediaQuery.of(context).size.height * 0.10),
                 Column(
                   children: [
                     SizedBox(
